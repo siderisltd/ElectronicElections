@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ElectronicElections.Data.Models
 {
@@ -11,12 +12,16 @@ namespace ElectronicElections.Data.Models
             this.VerificationCode = Guid.NewGuid();
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         public ElectionTypeId ElectionsType { get; set; }
 
+        [ForeignKey(nameof(Voter))]
         public Guid VoterId { get; set; }
 
+        [ForeignKey(nameof(PoliticalParty))]
         public Guid PoliticalPartyId { get; set; }
 
         public virtual PoliticalParty PoliticalParty { get; set; }

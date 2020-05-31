@@ -1,11 +1,17 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ElectronicElections.Data.Models
 {
     public class Politician
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+
+        [ForeignKey(nameof(PoliticalParty))]
+        public Guid PoliticalPartyId { get; set; }
 
         [Required(AllowEmptyStrings = false)]
         [StringLength(20)]
@@ -15,7 +21,7 @@ namespace ElectronicElections.Data.Models
         [StringLength(20)]
         public string LastName { get; set; }
 
-        [StringLength(500)]
+        [StringLength(1000)]
         public string Description { get; set; }
 
         [Required]

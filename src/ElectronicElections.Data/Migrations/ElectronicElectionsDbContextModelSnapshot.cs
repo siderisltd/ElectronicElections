@@ -74,8 +74,8 @@ namespace ElectronicElections.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<string>("Goals")
                         .HasColumnType("nvarchar(500)")
@@ -93,6 +93,24 @@ namespace ElectronicElections.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PoliticalParties");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ca9ea934-37cd-4d56-9335-0d3348aaf297"),
+                            Description = "ГЕРБ е дясноцентристка, популистка, консервативна и проевропейска политическа партия в България. Тя е основана на 3 декември 2006 г. по инициатива на кмета на София Бойко Борисов, на основата на създаденото по-рано през същата година гражданско сдружение с име „Граждани за европейско развитие на България“ и абревиатура „ГЕРБ“.[6] Централата на партията се намира в Националния дворец на културата, на площад „България“ №1 в.",
+                            Goals = "Унищожаване на Българската икономика и популация. Собствена изгода",
+                            Name = "ГЕРБ",
+                            WikiLink = "https://google.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("d5c55e1a-7c1e-47a8-97eb-a0520c62057c"),
+                            Description = "Движението за права и свободи (ДПС) е центристка политическа партия в България, ползваща се с подкрепата главно на етническите турци и други мюсюлмани в България, определяща се като либерална партия и член на Либералния интернационал. ДПС е определяно като един от основните поддръжници на олигархичния модел на държавно управление.[1]",
+                            Goals = "Голове тест 123",
+                            Name = "ДПС",
+                            WikiLink = "https://google.com"
+                        });
                 });
 
             modelBuilder.Entity("ElectronicElections.Data.Models.PoliticalPartyElectionType", b =>
@@ -108,6 +126,28 @@ namespace ElectronicElections.Data.Migrations
                     b.HasIndex("ElectionTypeId");
 
                     b.ToTable("PoliticalPartyElectionType");
+
+                    b.HasData(
+                        new
+                        {
+                            PoliticalPartyId = new Guid("ca9ea934-37cd-4d56-9335-0d3348aaf297"),
+                            ElectionTypeId = 0
+                        },
+                        new
+                        {
+                            PoliticalPartyId = new Guid("ca9ea934-37cd-4d56-9335-0d3348aaf297"),
+                            ElectionTypeId = 2
+                        },
+                        new
+                        {
+                            PoliticalPartyId = new Guid("ca9ea934-37cd-4d56-9335-0d3348aaf297"),
+                            ElectionTypeId = 1
+                        },
+                        new
+                        {
+                            PoliticalPartyId = new Guid("d5c55e1a-7c1e-47a8-97eb-a0520c62057c"),
+                            ElectionTypeId = 2
+                        });
                 });
 
             modelBuilder.Entity("ElectronicElections.Data.Models.Politician", b =>
@@ -120,8 +160,8 @@ namespace ElectronicElections.Data.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -133,7 +173,7 @@ namespace ElectronicElections.Data.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.Property<Guid?>("PoliticalPartyId")
+                    b.Property<Guid>("PoliticalPartyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("WikiLink")
@@ -145,6 +185,48 @@ namespace ElectronicElections.Data.Migrations
                     b.HasIndex("PoliticalPartyId");
 
                     b.ToTable("Politicians");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2206ba49-c68a-426f-8c15-51f5ace48f78"),
+                            Age = (byte)50,
+                            Description = "Хомосексуалист, който ограбва държавата. Мафиот",
+                            FirstName = "Бойко",
+                            LastName = "Борисов",
+                            PoliticalPartyId = new Guid("ca9ea934-37cd-4d56-9335-0d3348aaf297"),
+                            WikiLink = "https://google.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("649b2e11-92a6-4789-9d1b-19ae33722797"),
+                            Age = (byte)40,
+                            Description = "Тест. Мафиот 2",
+                            FirstName = "Тест",
+                            LastName = "Тест 2",
+                            PoliticalPartyId = new Guid("ca9ea934-37cd-4d56-9335-0d3348aaf297"),
+                            WikiLink = "https://google.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("5cf41c11-b33f-485a-9487-1ec005b8d27f"),
+                            Age = (byte)20,
+                            Description = "Описание дпс",
+                            FirstName = "Тест дпс фн",
+                            LastName = "Тест дпс лн",
+                            PoliticalPartyId = new Guid("d5c55e1a-7c1e-47a8-97eb-a0520c62057c"),
+                            WikiLink = "https://google.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("0b9b6f7f-b52b-4e20-ab65-ffe1b107f99f"),
+                            Age = (byte)30,
+                            Description = "Тест. Описание 2",
+                            FirstName = "Тест дпс 2 фн",
+                            LastName = "Тест дпс 2 лн",
+                            PoliticalPartyId = new Guid("d5c55e1a-7c1e-47a8-97eb-a0520c62057c"),
+                            WikiLink = "https://google.com"
+                        });
                 });
 
             modelBuilder.Entity("ElectronicElections.Data.Models.Vote", b =>
@@ -234,7 +316,9 @@ namespace ElectronicElections.Data.Migrations
                 {
                     b.HasOne("ElectronicElections.Data.Models.PoliticalParty", "PoliticalParty")
                         .WithMany("Politicians")
-                        .HasForeignKey("PoliticalPartyId");
+                        .HasForeignKey("PoliticalPartyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ElectronicElections.Data.Models.Vote", b =>

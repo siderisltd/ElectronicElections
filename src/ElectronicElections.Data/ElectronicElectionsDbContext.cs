@@ -1,6 +1,7 @@
-﻿using ElectronicElections.Data.Models;
+﻿using ElectronicElections.Data.Managers;
+using ElectronicElections.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
+using System.Diagnostics;
 
 namespace ElectronicElections.Data
 {
@@ -30,27 +31,12 @@ namespace ElectronicElections.Data
 
         private static void SeedData(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ElectionType>().HasData(new ElectionType
-            {
-                Id = ElectionTypeId.NationalAssembly,
-                Name = Enum.GetName(typeof(ElectionTypeId), ElectionTypeId.NationalAssembly),
-                Description = "Some description",
-                WikiLink = "https://google.com"
-            },
-            new ElectionType
-            {
-                Id = ElectionTypeId.PresidentalElections,
-                Name = Enum.GetName(typeof(ElectionTypeId), ElectionTypeId.PresidentalElections),
-                Description = "Some description",
-                WikiLink = "https://google.com"
-            },
-            new ElectionType
-            {
-                Id = ElectionTypeId.EuropeanParliament,
-                Name = Enum.GetName(typeof(ElectionTypeId), ElectionTypeId.EuropeanParliament),
-                Description = "Some description",
-                WikiLink = "https://google.com"
-            });
+            var dataSeedManager = new DataSeedManager();
+
+            dataSeedManager.SeedElectionTypes(modelBuilder);
+            dataSeedManager.SeedElectionPoliticalParties(modelBuilder);
+            dataSeedManager.SeedPoliticians(modelBuilder);
+            dataSeedManager.SeedPoliticalPartyElectionTypeRelations(modelBuilder);
         }
 
         private static void ConfigureRelationships(ModelBuilder modelBuilder)
