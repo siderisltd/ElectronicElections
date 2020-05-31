@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ElectronicElections.Data.Models
 {
@@ -16,5 +17,7 @@ namespace ElectronicElections.Data.Models
 
         [StringLength(200)]
         public string WikiLink { get; set; }
+
+        public virtual IEnumerable<PoliticalPartyElectionType> PoliticalParties { get; set; }
     }
 }

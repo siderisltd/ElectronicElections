@@ -19,9 +19,16 @@ namespace ElectronicElections.Data
         public ElectronicElectionsDbContext(DbContextOptions<ElectronicElectionsDbContext> options) 
             : base(options)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            ConfigureRelationships(modelBuilder);
+            SeedData(modelBuilder);
+        }
+
+        private static void SeedData(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ElectionType>().HasData(new ElectionType
             {
@@ -44,6 +51,22 @@ namespace ElectronicElections.Data
                 Description = "Some description",
                 WikiLink = "https://google.com"
             });
+        }
+
+        private static void ConfigureRelationships(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PoliticalPartyElectionType>()
+                .HasKey(bc => new { bc.PoliticalPartyId, bc.ElectionTypeId });
+
+            modelBuilder.Entity<PoliticalPartyElectionType>()
+                .HasOne(bc => bc.PoliticalParty)
+                .WithMany(b => b.ParticipantInElections)
+                .HasForeignKey(bc => bc.PoliticalPartyId);
+
+            modelBuilder.Entity<PoliticalPartyElectionType>()
+                .HasOne(bc => bc.ElectionType)
+                .WithMany(c => c.PoliticalParties)
+                .HasForeignKey(bc => bc.ElectionTypeId);
         }
     }
 }

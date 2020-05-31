@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ElectronicElections.Web.Models;
-using ElectronicElections.Data.Repositories;
+using ElectronicElections.Infrastructure.Services;
 
 namespace ElectronicElections.Web.Controllers
 {
@@ -14,12 +10,9 @@ namespace ElectronicElections.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private readonly ElectionsRepository repo;
-
-        public HomeController(ILogger<HomeController> logger, ElectionsRepository repo)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            this.repo = repo;
         }
 
         public IActionResult Index()

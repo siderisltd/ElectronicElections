@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ElectronicElections.Data.Repositories
+namespace ElectronicElections.Data.Managers
 {
-    public class ElectionsRepository
+    public class ElectionsManager
     {
         private readonly ElectronicElectionsDbContext ctx;
 
-        public ElectionsRepository(ElectronicElectionsDbContext ctx)
+        public ElectionsManager(ElectronicElectionsDbContext ctx)
         {
             this.ctx = ctx;
         }
@@ -16,6 +16,11 @@ namespace ElectronicElections.Data.Repositories
         public IEnumerable<ElectionType> GetElectionTypes()
         {
             return this.ctx.ElectionTypes.ToList();
+        }
+
+        public IEnumerable<PoliticalParty> GetPoliticalParties(ElectionTypeId electionType)
+        {
+            return this.ctx.PoliticalParties.ToList();
         }
     }
 }

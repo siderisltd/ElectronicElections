@@ -5,7 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using ElectronicElections.Data;
-using ElectronicElections.Data.Repositories;
+using ElectronicElections.Data.Managers;
+using ElectronicElections.Infrastructure.Services;
 
 namespace ElectronicElections.Web
 {
@@ -21,8 +22,16 @@ namespace ElectronicElections.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ElectronicElectionsDbContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("ElectronicElectionsDb")));
-            services.AddScoped<ElectionsRepository>();
+            services.AddDbContext<ElectronicElectionsDbContext>(opts => 
+            {
+                opts.UseSqlServer(Configuration.GetConnectionString("ElectronicElectionsDb"));
+                opts.UseLazyLoadingProxies();
+            });
+           
+            services.AddScoped<ElectionsManager>();
+
+            services.AddTransient<VoteService>();
+            services.AddTransient<ElectionsService>();
 
             services.AddControllersWithViews();
         }
