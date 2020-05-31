@@ -3,24 +3,36 @@
 
 @{ ViewData["Title"] = "Vote"; }
 
-    <div class="text-center">
-        <h5>Тип на изборите : @Model.ElectionTypeName</h5>
-        <h5>Гласуване за : @Model.PoliticalParty.Name</h5>
-        <img src="@Url.Content(Model.PoliticalParty.LogoLink)" width="200" height="200" />
+<div class="card mb-3" style="max-width: 82%">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src="@Url.Content(Model.PoliticalParty.LogoLink)" class="card-img">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">Тип на изборите : @Model.ElectionTypeName</h5>
+                <p class="card-text">Гласуване за : @Model.PoliticalParty.Name</p>
+            </div>
+        </div>
     </div>
+</div>
+
 
 @using (Html.BeginForm("Post", "Voting", FormMethod.Post, new { id = "article-form", enctype = "multipart/form-data" }))
 {
+    @Html.ValidationSummary(true)
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(m => m.ElectionType)
     @Html.HiddenFor(m => m.PoliticalPartyId)
     @Html.HiddenFor(m => m.VoterIp)
+    @Html.ValidationMessageFor(model => model.VoterIp)
 
     <div class="form-group">
         @Html.LabelFor(x => x.VoterFirstName, new { @class = "col-lg-2 control-label" })
         <div class="col-lg-10">
             @Html.TextBoxFor(x => x.VoterFirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.VoterFirstName)
         </div>
     </div>
 
@@ -28,20 +40,28 @@
         @Html.LabelFor(x => x.VoterLastName, new { @class = "col-lg-2 control-label" })
         <div class="col-lg-10">
             @Html.TextBoxFor(x => x.VoterLastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.VoterLastName)
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.VoterEmail, new { @class = "col-lg-2 control-label" })
         <div class="col-lg-10">
-            @Html.TextBoxFor(x => x.VoterEmail, new { @class = "form-control" })
+            @Html.TextBoxFor(x => x.VoterEmail, new { @class = "form-control", placeholder = "example@gmail.com" })
+            @Html.ValidationMessageFor(model => model.VoterEmail)
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.VoterAge, new { @class = "col-lg-2 control-label" })
         <div class="col-lg-10">
-            @Html.TextBoxFor(x => x.VoterAge, "{0:#.#}", new { @class = "form-control" })
+            <select class="form-control" id="exampleFormControlSelect1" name="VoterAge">
+                @for (int i = 18; i <= 120; i++)
+                {
+                    <option>@i</option>
+                }
+            </select>
+            @Html.ValidationMessageFor(model => model.VoterAge)
         </div>
     </div>
 

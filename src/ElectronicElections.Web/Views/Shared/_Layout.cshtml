@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Електронно гласуване</a>
+                <a class="navbar-brand @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : string.Empty)" asp-area="" asp-controller="Home" asp-action="Index">Електронно гласуване</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -46,6 +46,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(() => $('ul.navbar-nav').find('a[href="' + location.pathname + '"]').closest('li').addClass('active'));
+    </script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

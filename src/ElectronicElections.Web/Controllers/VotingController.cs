@@ -46,10 +46,18 @@ namespace ElectronicElections.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Post(VoteModel voteModel)
         {
+            if (!this.ModelState.IsValid)
+            {
+                voteModel.PoliticalParty = this.electionsService.GetPoliticalParty(voteModel.PoliticalPartyId);
+                return View(nameof(Vote), voteModel);
+            }
+
             var voterIp = this.HttpContext.Connection.RemoteIpAddress.ToString();
             if(voterIp != voteModel.VoterIp)
             {
-                throw new InvalidOperationException("The IP addresses does not match!");
+                this.ModelState.AddModelError(nameof(VoteModel.VoterIp), "IP то ви не съвпада");
+                voteModel.PoliticalParty = this.electionsService.GetPoliticalParty(voteModel.PoliticalPartyId);
+                return View(nameof(Vote), voteModel);
             }
 
             var isSuccess = this.voteService.Vote(voteModel);
