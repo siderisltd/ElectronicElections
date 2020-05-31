@@ -81,6 +81,10 @@ namespace ElectronicElections.Data.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
+                    b.Property<string>("LogoLink")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -97,19 +101,30 @@ namespace ElectronicElections.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ca9ea934-37cd-4d56-9335-0d3348aaf297"),
+                            Id = new Guid("b42d93ab-c675-4809-855f-c903d0c02112"),
                             Description = "ГЕРБ е дясноцентристка, популистка, консервативна и проевропейска политическа партия в България. Тя е основана на 3 декември 2006 г. по инициатива на кмета на София Бойко Борисов, на основата на създаденото по-рано през същата година гражданско сдружение с име „Граждани за европейско развитие на България“ и абревиатура „ГЕРБ“.[6] Централата на партията се намира в Националния дворец на културата, на площад „България“ №1 в.",
                             Goals = "Унищожаване на Българската икономика и популация. Собствена изгода",
+                            LogoLink = "https://lh3.googleusercontent.com/proxy/4zqzPSm22DJIQ7pdaLVRjJXVfqVXFhx8kaIft_KMNK6S-dVFY7tA0Y4fTUBEvPVMxesXAWYe5P_gID2ANJ8Jb_LwtguNavWm",
                             Name = "ГЕРБ",
-                            WikiLink = "https://google.com"
+                            WikiLink = "https://bg.wikipedia.org/wiki/ГЕРБ"
                         },
                         new
                         {
-                            Id = new Guid("d5c55e1a-7c1e-47a8-97eb-a0520c62057c"),
+                            Id = new Guid("55755f3e-e9fa-4f01-8882-e09c27042665"),
                             Description = "Движението за права и свободи (ДПС) е центристка политическа партия в България, ползваща се с подкрепата главно на етническите турци и други мюсюлмани в България, определяща се като либерална партия и член на Либералния интернационал. ДПС е определяно като един от основните поддръжници на олигархичния модел на държавно управление.[1]",
                             Goals = "Голове тест 123",
+                            LogoLink = "https://lh3.googleusercontent.com/proxy/XUQdtdclVg27SSLJxbP1-6An0aSnvFFmwWqZLbf5RhVY-mcxtPrTHYuQmiJu5_jqVPTutOr1OfaR6hZMk9vb2AYe09aqfDRqtkV3Tx3gP72wQHU",
                             Name = "ДПС",
-                            WikiLink = "https://google.com"
+                            WikiLink = "https://bg.wikipedia.org/wiki/ДПС"
+                        },
+                        new
+                        {
+                            Id = new Guid("197c6090-9ba1-4478-849f-24db488a1e4d"),
+                            Description = "„Атака“ е политическа партия в България[2][3], която използва популистки послания, за да спечели симпатии от избирателите.[4] Според някои мнения „Атака“ е крайнодясна партия[1], според други – крайнолява.[5] Заема проруски позиции.[6]",
+                            Goals = "Партията е парламентарно представена, издава партиен вестник („Атака“) и притежава своя телевизия – „ТВ Алфа“.",
+                            LogoLink = "https://pia-news.com/wp-content/uploads/2015/09/ataka_logo.gif",
+                            Name = "Атака",
+                            WikiLink = "https://bg.wikipedia.org/wiki/Атака_(партия)"
                         });
                 });
 
@@ -130,22 +145,37 @@ namespace ElectronicElections.Data.Migrations
                     b.HasData(
                         new
                         {
-                            PoliticalPartyId = new Guid("ca9ea934-37cd-4d56-9335-0d3348aaf297"),
+                            PoliticalPartyId = new Guid("b42d93ab-c675-4809-855f-c903d0c02112"),
                             ElectionTypeId = 0
                         },
                         new
                         {
-                            PoliticalPartyId = new Guid("ca9ea934-37cd-4d56-9335-0d3348aaf297"),
+                            PoliticalPartyId = new Guid("b42d93ab-c675-4809-855f-c903d0c02112"),
                             ElectionTypeId = 2
                         },
                         new
                         {
-                            PoliticalPartyId = new Guid("ca9ea934-37cd-4d56-9335-0d3348aaf297"),
+                            PoliticalPartyId = new Guid("b42d93ab-c675-4809-855f-c903d0c02112"),
                             ElectionTypeId = 1
                         },
                         new
                         {
-                            PoliticalPartyId = new Guid("d5c55e1a-7c1e-47a8-97eb-a0520c62057c"),
+                            PoliticalPartyId = new Guid("197c6090-9ba1-4478-849f-24db488a1e4d"),
+                            ElectionTypeId = 0
+                        },
+                        new
+                        {
+                            PoliticalPartyId = new Guid("197c6090-9ba1-4478-849f-24db488a1e4d"),
+                            ElectionTypeId = 2
+                        },
+                        new
+                        {
+                            PoliticalPartyId = new Guid("55755f3e-e9fa-4f01-8882-e09c27042665"),
+                            ElectionTypeId = 0
+                        },
+                        new
+                        {
+                            PoliticalPartyId = new Guid("55755f3e-e9fa-4f01-8882-e09c27042665"),
                             ElectionTypeId = 2
                         });
                 });
@@ -173,6 +203,10 @@ namespace ElectronicElections.Data.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
+                    b.Property<string>("PhotoLink")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
                     b.Property<Guid>("PoliticalPartyId")
                         .HasColumnType("uniqueidentifier");
 
@@ -189,42 +223,52 @@ namespace ElectronicElections.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2206ba49-c68a-426f-8c15-51f5ace48f78"),
+                            Id = new Guid("c99a57e8-e41b-41d9-b41b-7959a98daee7"),
                             Age = (byte)50,
                             Description = "Хомосексуалист, който ограбва държавата. Мафиот",
                             FirstName = "Бойко",
                             LastName = "Борисов",
-                            PoliticalPartyId = new Guid("ca9ea934-37cd-4d56-9335-0d3348aaf297"),
+                            PoliticalPartyId = new Guid("b42d93ab-c675-4809-855f-c903d0c02112"),
                             WikiLink = "https://google.com"
                         },
                         new
                         {
-                            Id = new Guid("649b2e11-92a6-4789-9d1b-19ae33722797"),
+                            Id = new Guid("b4b9c11c-a08b-4c0e-81d7-61dff06690a1"),
                             Age = (byte)40,
                             Description = "Тест. Мафиот 2",
                             FirstName = "Тест",
                             LastName = "Тест 2",
-                            PoliticalPartyId = new Guid("ca9ea934-37cd-4d56-9335-0d3348aaf297"),
+                            PoliticalPartyId = new Guid("b42d93ab-c675-4809-855f-c903d0c02112"),
                             WikiLink = "https://google.com"
                         },
                         new
                         {
-                            Id = new Guid("5cf41c11-b33f-485a-9487-1ec005b8d27f"),
+                            Id = new Guid("a6e36a45-7f1d-46a8-b003-37f616350ef6"),
                             Age = (byte)20,
                             Description = "Описание дпс",
                             FirstName = "Тест дпс фн",
                             LastName = "Тест дпс лн",
-                            PoliticalPartyId = new Guid("d5c55e1a-7c1e-47a8-97eb-a0520c62057c"),
+                            PoliticalPartyId = new Guid("55755f3e-e9fa-4f01-8882-e09c27042665"),
                             WikiLink = "https://google.com"
                         },
                         new
                         {
-                            Id = new Guid("0b9b6f7f-b52b-4e20-ab65-ffe1b107f99f"),
+                            Id = new Guid("6d93ab01-b55c-4d14-a571-1c254e32b32e"),
                             Age = (byte)30,
                             Description = "Тест. Описание 2",
                             FirstName = "Тест дпс 2 фн",
                             LastName = "Тест дпс 2 лн",
-                            PoliticalPartyId = new Guid("d5c55e1a-7c1e-47a8-97eb-a0520c62057c"),
+                            PoliticalPartyId = new Guid("55755f3e-e9fa-4f01-8882-e09c27042665"),
+                            WikiLink = "https://google.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("04f446de-3a3f-4d01-ae3e-2074a29d847e"),
+                            Age = (byte)60,
+                            Description = "Активист",
+                            FirstName = "Волен",
+                            LastName = "Сидеров",
+                            PoliticalPartyId = new Guid("197c6090-9ba1-4478-849f-24db488a1e4d"),
                             WikiLink = "https://google.com"
                         });
                 });

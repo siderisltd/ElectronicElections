@@ -3,9 +3,11 @@
 
 @{ ViewData["Title"] = "Vote"; }
 
-<div class="text-center">
-    <h3 class="display-4">На път сте да изберете политическа партия : @Model.PoliticalParty.Name в избори от тип: [@Model.ElectionTypeName]</h3>
-</div>
+    <div class="text-center">
+        <h5>Тип на изборите : @Model.ElectionTypeName</h5>
+        <h5>Гласуване за : @Model.PoliticalParty.Name</h5>
+        <img src="@Url.Content(Model.PoliticalParty.LogoLink)" width="200" height="200" />
+    </div>
 
 @using (Html.BeginForm("Post", "Voting", FormMethod.Post, new { id = "article-form", enctype = "multipart/form-data" }))
 {
@@ -39,7 +41,7 @@
     <div class="form-group">
         @Html.LabelFor(x => x.VoterAge, new { @class = "col-lg-2 control-label" })
         <div class="col-lg-10">
-            @Html.TextBoxFor(x => x.VoterAge, new { @class = "form-control" })
+            @Html.TextBoxFor(x => x.VoterAge, "{0:#.#}", new { @class = "form-control" })
         </div>
     </div>
 

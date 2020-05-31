@@ -9,11 +9,13 @@ namespace ElectronicElections.Infrastructure.Models
     {
         public Guid Id { get; set; }
 
-        [DisplayName("Име на партията")]
+        [DisplayName("Име")]
         public string Name { get; set; }
 
-        [DisplayName("Описание на партията")]
+        [DisplayName("Описание")]
         public string Description { get; set; }
+
+        public string LogoLink { get; set; }
 
         [DisplayName("Wikipedia връзка за повече информация")]
         public string WikiLink { get; set; }

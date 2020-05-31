@@ -31,6 +31,9 @@ namespace ElectronicElections.Data.Models
         [StringLength(200)]
         public string WikiLink { get; set; }
 
+        [StringLength(200)]
+        public string PhotoLink { get; set; }
+
         public virtual PoliticalParty PoliticalParty { get; set; }
     }
 }
