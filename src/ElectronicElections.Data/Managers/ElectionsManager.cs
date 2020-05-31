@@ -1,4 +1,5 @@
 ﻿using ElectronicElections.Data.Models;
+using System;
 using System.Linq;
 
 namespace ElectronicElections.Data.Managers
@@ -20,6 +21,17 @@ namespace ElectronicElections.Data.Managers
         public IQueryable<PoliticalParty> GetPoliticalParties(ElectionTypeId electionType)
         {
             return this.ctx.PoliticalParties.Where(p => p.ParticipantInElections.Any(etype => etype.ElectionTypeId == electionType));
+        }
+
+        public IQueryable<PoliticalParty> GetById(Guid id)
+        {
+            return this.ctx.PoliticalParties.Where(p => p.Id == id);
+        }
+
+        public void PostVote(Vote vote)
+        {
+            this.ctx.Votes.Add(vote);
+            this.ctx.SaveChanges();
         }
     }
 }

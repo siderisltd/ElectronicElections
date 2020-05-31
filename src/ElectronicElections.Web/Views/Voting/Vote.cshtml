@@ -1,0 +1,47 @@
+﻿@using ElectronicElections.Infrastructure.Models
+@model VoteModel
+
+@{ ViewData["Title"] = "Vote"; }
+
+<div class="text-center">
+    <h3 class="display-4">На път сте да изберете политическа партия : @Model.PoliticalParty.Name в избори от тип: [@Model.ElectionTypeName]</h3>
+</div>
+
+@using (Html.BeginForm("Post", "Voting", FormMethod.Post, new { id = "article-form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.ElectionType)
+    @Html.HiddenFor(m => m.PoliticalPartyId)
+    @Html.HiddenFor(m => m.VoterIp)
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.VoterFirstName, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(x => x.VoterFirstName, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.VoterLastName, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(x => x.VoterLastName, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.VoterEmail, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(x => x.VoterEmail, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.VoterAge, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(x => x.VoterAge, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <input id="add-article-button" type="submit" class="btn btn-success" value="Гласувай!" />
+}

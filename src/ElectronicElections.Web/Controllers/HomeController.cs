@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ElectronicElections.Web.Models;
-using ElectronicElections.Infrastructure.Services;
 
 namespace ElectronicElections.Web.Controllers
 {
@@ -16,11 +15,6 @@ namespace ElectronicElections.Web.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }

@@ -1,7 +1,7 @@
 ﻿@using ElectronicElections.Infrastructure.Models
 @model IEnumerable<PoliticalPartyModel>
 
-@{ ViewData["Title"] = "Home Page"; }
+@{ ViewData["Title"] = "Elections"; }
 
 @foreach (var politicalParty in Model)
 {
@@ -10,6 +10,9 @@
         @Html.LabelFor(model => model.FirstOrDefault().Description)
         <p>@politicalParty.Description</p>
         <h4>@Html.DisplayNameFor(model => model.FirstOrDefault().WikiLink) <a href="@politicalParty.WikiLink" target="_blank">тук</a>.</h4>
+
+        @Html.ActionLink("Гласувай за тази партия", "Vote", "Voting", new { electionType = ViewData["ElectionsType"], politicalPartyId = politicalParty.Id }, new { @class = "btn btn-primary" })
     </div>
 }
+
 

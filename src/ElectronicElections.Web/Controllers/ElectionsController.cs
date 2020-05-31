@@ -1,7 +1,6 @@
 ﻿using ElectronicElections.Data.Models;
 using ElectronicElections.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace ElectronicElections.Web.Controllers
 {
@@ -16,14 +15,10 @@ namespace ElectronicElections.Web.Controllers
 
         public ActionResult List(ElectionTypeId id)
         {
+            this.ViewData["ElectionsType"] = id;
             var politicalParties = this.electionsService.GetPoliticalParties(id);
 
             return View(politicalParties);
-        }
-
-        public ActionResult Details(Guid id)
-        {
-            return View();
         }
     }
 }
