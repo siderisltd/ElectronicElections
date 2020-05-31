@@ -7,6 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using ElectronicElections.Data;
 using ElectronicElections.Data.Managers;
 using ElectronicElections.Infrastructure.Services;
+using AutoMapper;
+using System.Reflection;
+using ElectronicElections.Infrastructure.Mapping;
+using System.Collections.Generic;
 
 namespace ElectronicElections.Web
 {
@@ -32,6 +36,20 @@ namespace ElectronicElections.Web
 
             services.AddTransient<VoteService>();
             services.AddTransient<ElectionsService>();
+
+            var autoMapperConfig = new AutoMapperConfig();
+
+            var assembliesWithMappings = new List<Assembly>
+            {
+                Assembly.Load("ElectronicElections.Data"),
+                Assembly.Load("ElectronicElections.Infrastructure"),
+                Assembly.Load("ElectronicElections.Web")
+            };
+
+            autoMapperConfig.Execute(assembliesWithMappings);
+            
+            IMapper mapper = AutoMapperConfig.Configuration.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddControllersWithViews();
         }

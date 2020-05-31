@@ -1,5 +1,4 @@
 ﻿using ElectronicElections.Data.Models;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ElectronicElections.Data.Managers
@@ -13,14 +12,14 @@ namespace ElectronicElections.Data.Managers
             this.ctx = ctx;
         }
 
-        public IEnumerable<ElectionType> GetElectionTypes()
+        public IQueryable<ElectionType> GetElectionTypes()
         {
-            return this.ctx.ElectionTypes.ToList();
+            return this.ctx.ElectionTypes;
         }
 
-        public IEnumerable<PoliticalParty> GetPoliticalParties(ElectionTypeId electionType)
+        public IQueryable<PoliticalParty> GetPoliticalParties(ElectionTypeId electionType)
         {
-            return this.ctx.PoliticalParties.ToList();
+            return this.ctx.PoliticalParties.Where(p => p.ParticipantInElections.Any(etype => etype.ElectionTypeId == electionType));
         }
     }
 }

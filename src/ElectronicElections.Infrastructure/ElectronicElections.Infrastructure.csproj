@@ -5,11 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ElectronicElections.Data\ElectronicElections.Data.csproj" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\" />
+    <ProjectReference Include="..\ElectronicElections.Data\ElectronicElections.Data.csproj" />
   </ItemGroup>
 
 </Project>

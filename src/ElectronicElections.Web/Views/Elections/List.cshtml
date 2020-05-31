@@ -1,0 +1,15 @@
+﻿@using ElectronicElections.Infrastructure.Models
+@model IEnumerable<PoliticalPartyModel>
+
+@{ ViewData["Title"] = "Home Page"; }
+
+@foreach (var politicalParty in Model)
+{
+    <div class="text-center">
+        <h3 class="display-4" id="@politicalParty.Id">@Html.DisplayNameFor(model => model.FirstOrDefault().Name) : @politicalParty.Name</h3>
+        @Html.LabelFor(model => model.FirstOrDefault().Description)
+        <p>@politicalParty.Description</p>
+        <h4>@Html.DisplayNameFor(model => model.FirstOrDefault().WikiLink) <a href="@politicalParty.WikiLink" target="_blank">тук</a>.</h4>
+    </div>
+}
+

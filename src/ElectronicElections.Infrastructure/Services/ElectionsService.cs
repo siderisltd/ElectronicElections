@@ -1,6 +1,9 @@
 ﻿using ElectronicElections.Data.Managers;
 using ElectronicElections.Data.Models;
+using ElectronicElections.Infrastructure.Extensions;
+using ElectronicElections.Infrastructure.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ElectronicElections.Infrastructure.Services
 {
@@ -13,9 +16,9 @@ namespace ElectronicElections.Infrastructure.Services
             this.electionsManager = electionsManager;
         }
 
-        public IEnumerable<PoliticalParty> GetPoliticalParties(ElectionTypeId electionType)
+        public IEnumerable<PoliticalPartyModel> GetPoliticalParties(ElectionTypeId electionType)
         {
-            return this.electionsManager.GetPoliticalParties(electionType);
+            return this.electionsManager.GetPoliticalParties(electionType).To<PoliticalPartyModel>().ToList();
         }
     }
 }
