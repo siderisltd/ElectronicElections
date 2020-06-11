@@ -11,7 +11,7 @@
     @foreach (var politicalParty in Model)
     {
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="@Url.Content(politicalParty.LogoLink)" height="250" alt="Card image cap">
+            <img class="card-img-top" src="@politicalParty.LogoBase64" height="250" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">@politicalParty.Name</h5>
                 <p class="card-text">@politicalParty.Description</p>
@@ -21,5 +21,4 @@
         </div>
     }
 </div>
-
 

@@ -15,7 +15,7 @@ namespace ElectronicElections.Infrastructure.Models
         [DisplayName("Описание")]
         public string Description { get; set; }
 
-        public string LogoLink { get; set; }
+        public string LogoBase64 { get; set; }
 
         [DisplayName("Wikipedia връзка за повече информация")]
         public string WikiLink { get; set; }

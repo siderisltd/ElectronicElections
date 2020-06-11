@@ -25,8 +25,8 @@ namespace ElectronicElections.Data.Models
         [StringLength(200)]
         public string WikiLink { get; set; }
 
-        [StringLength(200)]
-        public string LogoLink { get; internal set; }
+        [Required(AllowEmptyStrings = false)]
+        public string LogoBase64 { get; internal set; }
 
         public virtual IEnumerable<PoliticalPartyElectionType> ParticipantInElections { get;set; }
 

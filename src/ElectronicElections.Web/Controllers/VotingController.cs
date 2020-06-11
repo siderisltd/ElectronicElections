@@ -31,7 +31,8 @@ namespace ElectronicElections.Web.Controllers
                 case ElectionTypeId.EuropeanParliament: electionTypeName = "Избори за европейски парламент"; break;
                 default: throw new InvalidOperationException("Invalid election type");
             }
-            var voteModel = new VoteModel 
+
+            var voteModel = new VoteModel
             {
                 PoliticalParty = this.electionsService.GetPoliticalParty(politicalPartyId),
                 ElectionType = electionType,
@@ -53,7 +54,7 @@ namespace ElectronicElections.Web.Controllers
             }
 
             var voterIp = this.HttpContext.Connection.RemoteIpAddress.ToString();
-            if(voterIp != voteModel.VoterIp)
+            if (voterIp != voteModel.VoterIp)
             {
                 this.ModelState.AddModelError(nameof(VoteModel.VoterIp), "IP то ви не съвпада");
                 voteModel.PoliticalParty = this.electionsService.GetPoliticalParty(voteModel.PoliticalPartyId);
@@ -61,9 +62,25 @@ namespace ElectronicElections.Web.Controllers
             }
 
             var isSuccess = this.voteService.Vote(voteModel);
-            
-            //TODO: Add handling
-            return RedirectToAction(nameof(ElectionsController.List), "Elections", new { id = voteModel.ElectionType });
+
+            if (isSuccess)
+            {
+                return RedirectToAction(nameof(this.Success));
+            } 
+            else
+            {
+                return RedirectToAction(nameof(this.Failure));
+            }
+        }
+
+        public ActionResult Success()
+        {
+            return this.View();
+        }
+
+        public ActionResult Failure()
+        {
+            return RedirectToAction(nameof(HomeController.Error), "Home");
         }
     }
 }
