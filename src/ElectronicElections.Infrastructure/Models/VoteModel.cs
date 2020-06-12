@@ -36,6 +36,8 @@ namespace ElectronicElections.Infrastructure.Models
         [Required(ErrorMessage = "IP то ви не може да бъде локирано")]
         public string VoterIp { get; set; }
 
+        public Guid VerificationCode { get; set; }
+
         public PoliticalPartyModel PoliticalParty { get; set; }
     }
 }

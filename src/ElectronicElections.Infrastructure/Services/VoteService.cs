@@ -35,7 +35,8 @@ namespace ElectronicElections.Infrastructure.Services
                 PoliticalPartyId = voteModel.PoliticalPartyId,
                 VotedFromIp = voteModel.VoterIp,
                 ElectionsType = voteModel.ElectionType,
-                Voter = voter
+                Voter = voter,
+                VerificationCode = voteModel.VerificationCode
             };
 
             try
@@ -49,6 +50,11 @@ namespace ElectronicElections.Infrastructure.Services
                 this.logger.LogError(ex, ex.Message);
                 return false;
             }
+        }
+
+        public bool Verify(Guid verificationCode)
+        {
+            return this.electionsManager.Verify(verificationCode);
         }
     }
 }

@@ -33,5 +33,15 @@ namespace ElectronicElections.Data.Managers
             this.ctx.Votes.Add(vote);
             this.ctx.SaveChanges();
         }
+
+        public bool Verify(Guid verificationCode)
+        {
+            var vote = this.ctx.Votes.FirstOrDefault(v => v.VerificationCode == verificationCode);
+            vote.IsVerified = true;
+            this.ctx.Votes.Update(vote);
+            this.ctx.SaveChanges();
+
+            return true;
+        }
     }
 }

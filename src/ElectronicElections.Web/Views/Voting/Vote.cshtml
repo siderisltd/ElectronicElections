@@ -18,9 +18,8 @@
 </div>
 
 
-@using (Html.BeginForm("Post", "Voting", FormMethod.Post, new { id = "article-form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("POST", "Voting", FormMethod.Post, new { id = "vote-form" }))
 {
-    @Html.ValidationSummary(true)
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(m => m.ElectionType)
@@ -31,37 +30,37 @@
     <div class="form-group">
         @Html.LabelFor(x => x.VoterFirstName, new { @class = "col-lg-2 control-label" })
         <div class="col-lg-10">
-            @Html.TextBoxFor(x => x.VoterFirstName, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.VoterFirstName)
+            @Html.TextBoxFor(x => x.VoterFirstName, new { @class = "form-control" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.VoterLastName, new { @class = "col-lg-2 control-label" })
         <div class="col-lg-10">
-            @Html.TextBoxFor(x => x.VoterLastName, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.VoterLastName)
+            @Html.TextBoxFor(x => x.VoterLastName, new { @class = "form-control" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.VoterEmail, new { @class = "col-lg-2 control-label" })
         <div class="col-lg-10">
-            @Html.TextBoxFor(x => x.VoterEmail, new { @class = "form-control", placeholder = "example@gmail.com" })
             @Html.ValidationMessageFor(model => model.VoterEmail)
+            @Html.TextBoxFor(x => x.VoterEmail, new { @class = "form-control", placeholder = "example@gmail.com" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.VoterAge, new { @class = "col-lg-2 control-label" })
         <div class="col-lg-10">
+            @Html.ValidationMessageFor(model => model.VoterAge)
             <select class="form-control" id="exampleFormControlSelect1" name="VoterAge">
                 @for (int i = 18; i <= 120; i++)
                 {
                     <option>@i</option>
                 }
             </select>
-            @Html.ValidationMessageFor(model => model.VoterAge)
         </div>
     </div>
 

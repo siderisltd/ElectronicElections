@@ -9,7 +9,6 @@ namespace ElectronicElections.Data.Models
         public Vote()
         {
             this.CreatedOn = DateTime.UtcNow;
-            this.VerificationCode = Guid.NewGuid();
         }
 
         [Key]

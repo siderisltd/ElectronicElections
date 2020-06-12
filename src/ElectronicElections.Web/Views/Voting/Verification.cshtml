@@ -1,0 +1,30 @@
+﻿@using ElectronicElections.Infrastructure.Models
+@model VerifyVoteModel
+
+@{ ViewData["Title"] = "Success"; }
+
+@if (TempData["Verified"] != null && (bool)TempData["Verified"])
+{
+    <h1>Гласа ви беше потвърден успешно. Следете фейсбук страницата ни за резултати всеки 24ч до дата: </h1>
+}
+else
+{
+    <h1>Гласувахте успешно! За да потвърдите гласа си, моля</h1>
+    <h1>За да потвърдите гласа си, моля въведете кода, изпратен на e-mail адреса ви в полето по-долу</h1>
+
+    @using (Html.BeginForm("Verify", "Voting", FormMethod.Post, new { id = "verify-vote-form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Code, new { @class = "col-lg-4 control-label" })
+            <div class="col-lg-10">
+                @Html.ValidationMessageFor(model => model.Code)
+                @Html.TextBoxFor(x => x.Code, new { @class = "form-control" })
+
+            </div>
+        </div>
+
+        <input id="add-article-button" type="submit" class="btn btn-success" value="Потвърди" />
+    }
+}
