@@ -42,8 +42,8 @@ namespace ElectronicElections.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    FirstName = table.Column<string>(maxLength: 20, nullable: false),
-                    LastName = table.Column<string>(maxLength: 20, nullable: false),
+                    FirstName = table.Column<string>(maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(maxLength: 100, nullable: false),
                     Age = table.Column<byte>(nullable: false),
                     Email = table.Column<string>(nullable: false)
                 },

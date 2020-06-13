@@ -7,10 +7,12 @@ namespace ElectronicElections.Data.Managers
     public class ElectionsManager
     {
         private readonly ElectronicElectionsDbContext ctx;
+        private readonly EncryptionManager encryptionManager;
 
-        public ElectionsManager(ElectronicElectionsDbContext ctx)
+        public ElectionsManager(ElectronicElectionsDbContext ctx, EncryptionManager encryptionManager)
         {
             this.ctx = ctx;
+            this.encryptionManager = encryptionManager;
         }
 
         public IQueryable<ElectionType> GetElectionTypes()
@@ -30,6 +32,15 @@ namespace ElectronicElections.Data.Managers
 
         public void PostVote(Vote vote)
         {
+            var superSecretSymetricKey = "b14ca5898a4e4133bbce2ea2315a1916";
+
+            var firstNameIdentifier = vote.Voter.FirstName[0];
+            var lastNameIdentifier = vote.Voter.LastName[0];
+
+            vote.Voter.Email = this.encryptionManager.EncryptString(superSecretSymetricKey, vote.Voter.Email);
+            vote.Voter.FirstName = $"{firstNameIdentifier}.{this.encryptionManager.EncryptString(superSecretSymetricKey, vote.Voter.FirstName)}";
+            vote.Voter.LastName = $"{lastNameIdentifier}.{this.encryptionManager.EncryptString(superSecretSymetricKey, vote.Voter.LastName)}";
+
             this.ctx.Votes.Add(vote);
             this.ctx.SaveChanges();
         }

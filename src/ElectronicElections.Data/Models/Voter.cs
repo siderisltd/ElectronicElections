@@ -11,11 +11,11 @@ namespace ElectronicElections.Data.Models
         public Guid Id { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        [StringLength(20)]
+        [StringLength(100)]
         public string FirstName { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        [StringLength(20)]
+        [StringLength(100)]
         public string LastName { get; set; }
 
         [Required]

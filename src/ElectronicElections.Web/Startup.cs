@@ -31,7 +31,8 @@ namespace ElectronicElections.Web
                 opts.UseSqlServer(Configuration.GetConnectionString("ElectronicElectionsDb"));
                 opts.UseLazyLoadingProxies();
             });
-           
+
+            services.AddScoped<EncryptionManager>();
             services.AddScoped<ElectionsManager>();
 
             services.AddTransient<VoteService>();
