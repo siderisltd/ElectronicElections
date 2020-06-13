@@ -71,7 +71,7 @@ namespace ElectronicElections.Web.Controllers
 
             if (isSuccess)
             {
-                this.SendVerificationCode(model.VoterEmail, model.VerificationCode);
+                this.voteService.SendVerificationCode(model.VoterEmail, model.VerificationCode);
                 return RedirectToAction(nameof(this.Verification));
             }
             else
@@ -117,33 +117,6 @@ namespace ElectronicElections.Web.Controllers
         public ActionResult Failure()
         {
             return RedirectToAction(nameof(HomeController.Error), "Home");
-        }
-
-        private void SendVerificationCode(string to, Guid verificationCode)
-        {
-            new Thread(() => 
-            {
-                var defaultMailAddress = "someorga@gmail.com";
-                //TODO: get from vault
-                var mailPassword = "someorgA#@!";
-
-                using (MailMessage mail = new MailMessage())
-                {
-                    mail.From = new MailAddress(defaultMailAddress);
-                    mail.To.Add(to);
-                    mail.Subject = "Електронно гласуване";
-                    mail.Body = $"Благодарим за гласа ви! За да потвърдите гласа си, моля копирайте този код в полето за валидиране на гласа ви: {verificationCode}";
-                    mail.IsBodyHtml = false;
-
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new NetworkCredential(defaultMailAddress, mailPassword);
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-                    }
-                }
-            }).Start();
-           
         }
     }
 }
