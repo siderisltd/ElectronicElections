@@ -7,7 +7,7 @@ namespace ElectronicElections.Infrastructure.Models
 {
     public class VoteModel
     {
-        public Guid PoliticalPartyId { get; set; }
+        public Guid CandidateId { get; set; }
 
         public ElectionTypeId ElectionType { get; set; }
 
@@ -38,6 +38,6 @@ namespace ElectronicElections.Infrastructure.Models
 
         public Guid VerificationCode { get; set; }
 
-        public PoliticalPartyModel PoliticalParty { get; set; }
+        public CandidateModel Candidate { get; set; }
     }
 }

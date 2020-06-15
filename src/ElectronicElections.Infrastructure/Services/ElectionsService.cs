@@ -17,14 +17,14 @@ namespace ElectronicElections.Infrastructure.Services
             this.electionsManager = electionsManager;
         }
 
-        public PoliticalPartyModel GetPoliticalParty(Guid id)
+        public CandidateModel GetCandidate(Guid id)
         {
-            return this.electionsManager.GetById(id).To<PoliticalPartyModel>().FirstOrDefault();
+            return this.electionsManager.GetById(id).To<CandidateModel>().FirstOrDefault();
         }
 
-        public IEnumerable<PoliticalPartyModel> GetPoliticalParties(ElectionTypeId electionType)
+        public IEnumerable<CandidateModel> GetCandidates(ElectionTypeId electionType)
         {
-            return this.electionsManager.GetPoliticalParties(electionType).To<PoliticalPartyModel>().ToList();
+            return this.electionsManager.GetCandidates(electionType).To<CandidateModel>().ToList();
         }
     }
 }

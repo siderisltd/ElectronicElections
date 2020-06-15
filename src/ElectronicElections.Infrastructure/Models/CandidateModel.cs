@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace ElectronicElections.Infrastructure.Models
 {
-    public class PoliticalPartyModel : IMapFrom<PoliticalParty>
+    public class CandidateModel : IMapFrom<Candidate>
     {
         public Guid Id { get; set; }
 
@@ -15,7 +15,7 @@ namespace ElectronicElections.Infrastructure.Models
         [DisplayName("Описание")]
         public string Description { get; set; }
 
-        public string LogoBase64 { get; set; }
+        public string ImgLink { get; set; }
 
         [DisplayName("Wikipedia връзка за повече информация")]
         public string WikiLink { get; set; }

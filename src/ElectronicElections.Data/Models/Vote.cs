@@ -20,10 +20,10 @@ namespace ElectronicElections.Data.Models
         [ForeignKey(nameof(Voter))]
         public Guid VoterId { get; set; }
 
-        [ForeignKey(nameof(PoliticalParty))]
-        public Guid PoliticalPartyId { get; set; }
+        [ForeignKey(nameof(Candidate))]
+        public Guid CandidateId { get; set; }
 
-        public virtual PoliticalParty PoliticalParty { get; set; }
+        public virtual Candidate Candidate { get; set; }
 
         public virtual Voter Voter { get; set; }
 

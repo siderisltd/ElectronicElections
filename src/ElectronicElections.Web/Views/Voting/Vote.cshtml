@@ -6,12 +6,12 @@
 <div class="card mb-3" style="max-width: 82%">
     <div class="row no-gutters">
         <div class="col-md-4">
-            <img src="@Model.PoliticalParty.LogoBase64" class="card-img">
+            <img src="@Url.Content(Model.Candidate.ImgLink)" class="card-img">
         </div>
         <div class="col-md-8">
             <div class="card-body">
                 <h5 class="card-title">Тип на изборите : @Model.ElectionTypeName</h5>
-                <p class="card-text">Гласуване за : @Model.PoliticalParty.Name</p>
+                <p class="card-text">Гласуване за : @Model.Candidate.Name</p>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(m => m.ElectionType)
-    @Html.HiddenFor(m => m.PoliticalPartyId)
+    @Html.HiddenFor(m => m.CandidateId)
     @Html.HiddenFor(m => m.VoterIp)
     @Html.ValidationMessageFor(model => model.VoterIp)
 

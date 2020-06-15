@@ -18,6 +18,6 @@ namespace ElectronicElections.Data.Models
         [StringLength(200)]
         public string WikiLink { get; set; }
 
-        public virtual IEnumerable<PoliticalPartyElectionType> PoliticalParties { get; set; }
+        public virtual IEnumerable<CandidateElectionType> Candidates { get; set; }
     }
 }

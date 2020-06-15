@@ -3,10 +3,6 @@ using ElectronicElections.Infrastructure.Models;
 using ElectronicElections.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Net;
-using System.Net.Mail;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ElectronicElections.Web.Controllers
 {
@@ -22,7 +18,7 @@ namespace ElectronicElections.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Vote([FromQuery]ElectionTypeId electionType, Guid politicalPartyId)
+        public ActionResult Vote([FromQuery]ElectionTypeId electionType, Guid candidateId)
         {
             var voterIp = this.HttpContext.Connection.RemoteIpAddress.ToString();
 
@@ -39,7 +35,7 @@ namespace ElectronicElections.Web.Controllers
 
             var voteModel = new VoteModel
             {
-                PoliticalParty = this.electionsService.GetPoliticalParty(politicalPartyId),
+                Candidate = this.electionsService.GetCandidate(candidateId),
                 ElectionType = electionType,
                 VoterIp = voterIp,
                 ElectionTypeName = electionTypeName
@@ -54,7 +50,7 @@ namespace ElectronicElections.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                model.PoliticalParty = this.electionsService.GetPoliticalParty(model.PoliticalPartyId);
+                model.Candidate = this.electionsService.GetCandidate(model.CandidateId);
                 return View(nameof(Vote), model);
             }
 
@@ -62,7 +58,7 @@ namespace ElectronicElections.Web.Controllers
             if (voterIp != model.VoterIp)
             {
                 this.ModelState.AddModelError(nameof(VoteModel.VoterIp), "IP то ви не съвпада");
-                model.PoliticalParty = this.electionsService.GetPoliticalParty(model.PoliticalPartyId);
+                model.Candidate = this.electionsService.GetCandidate(model.CandidateId);
                 return View(nameof(Vote), model);
             }
 
@@ -82,7 +78,10 @@ namespace ElectronicElections.Web.Controllers
 
         public ActionResult Verification(string nonce)
         {
-            var model = new VerifyVoteModel(nonce);
+            var model = new VerifyVoteModel
+            {
+                Nonce = nonce
+            };
 
             return this.View(model);
         }

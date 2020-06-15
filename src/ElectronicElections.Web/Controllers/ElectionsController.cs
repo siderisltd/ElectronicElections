@@ -16,9 +16,9 @@ namespace ElectronicElections.Web.Controllers
         public ActionResult List(ElectionTypeId id)
         {
             this.ViewData["ElectionsType"] = id;
-            var politicalParties = this.electionsService.GetPoliticalParties(id);
+            var candidates = this.electionsService.GetCandidates(id);
 
-            return View(politicalParties);
+            return View(candidates);
         }
     }
 }

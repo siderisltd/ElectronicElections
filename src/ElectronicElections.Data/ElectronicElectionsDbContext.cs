@@ -1,7 +1,6 @@
 ﻿using ElectronicElections.Data.Managers;
 using ElectronicElections.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 
 namespace ElectronicElections.Data
 {
@@ -11,16 +10,13 @@ namespace ElectronicElections.Data
 
         public DbSet<ElectionType> ElectionTypes { get; set; }
 
-        public DbSet<PoliticalParty> PoliticalParties { get; set; }
-
-        public DbSet<Politician> Politicians { get; set; }
+        public DbSet<Candidate> Candidates { get; set; }
 
         public DbSet<Vote> Votes { get; set; }
 
         public ElectronicElectionsDbContext(DbContextOptions<ElectronicElectionsDbContext> options) 
             : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -34,24 +30,23 @@ namespace ElectronicElections.Data
             var dataSeedManager = new DataSeedManager();
 
             dataSeedManager.SeedElectionTypes(modelBuilder);
-            dataSeedManager.SeedElectionPoliticalParties(modelBuilder);
-            dataSeedManager.SeedPoliticians(modelBuilder);
-            dataSeedManager.SeedPoliticalPartyElectionTypeRelations(modelBuilder);
+            dataSeedManager.SeedCandidates(modelBuilder);
+            dataSeedManager.SeedCandidateElectionTypeRelations(modelBuilder);
         }
 
         private static void ConfigureRelationships(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PoliticalPartyElectionType>()
-                .HasKey(bc => new { bc.PoliticalPartyId, bc.ElectionTypeId });
+            modelBuilder.Entity<CandidateElectionType>()
+                .HasKey(bc => new { bc.CandidateId, bc.ElectionTypeId });
 
-            modelBuilder.Entity<PoliticalPartyElectionType>()
-                .HasOne(bc => bc.PoliticalParty)
+            modelBuilder.Entity<CandidateElectionType>()
+                .HasOne(bc => bc.Candidate)
                 .WithMany(b => b.ParticipantInElections)
-                .HasForeignKey(bc => bc.PoliticalPartyId);
+                .HasForeignKey(bc => bc.CandidateId);
 
-            modelBuilder.Entity<PoliticalPartyElectionType>()
+            modelBuilder.Entity<CandidateElectionType>()
                 .HasOne(bc => bc.ElectionType)
-                .WithMany(c => c.PoliticalParties)
+                .WithMany(c => c.Candidates)
                 .HasForeignKey(bc => bc.ElectionTypeId);
         }
     }

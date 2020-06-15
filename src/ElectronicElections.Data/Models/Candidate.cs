@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ElectronicElections.Data.Models
 {
-    public class PoliticalParty
+    public class Candidate
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -26,10 +26,11 @@ namespace ElectronicElections.Data.Models
         public string WikiLink { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        public string LogoBase64 { get; internal set; }
+        [StringLength(200)]
+        public string ImgLink { get; internal set; }
 
-        public virtual IEnumerable<PoliticalPartyElectionType> ParticipantInElections { get;set; }
+        public CandidateTypeId CandidateType { get; set; }
 
-        public virtual IEnumerable<Politician> Politicians { get; set; }
+        public virtual IEnumerable<CandidateElectionType> ParticipantInElections { get;set; }
     }
 }

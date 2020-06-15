@@ -2,14 +2,14 @@
 
 namespace ElectronicElections.Data.Models
 {
-    public class PoliticalPartyElectionType
+    public class CandidateElectionType
     {
-        public Guid PoliticalPartyId { get; set; }
+        public Guid CandidateId { get; set; }
 
         public ElectionTypeId ElectionTypeId { get; set; }
 
         public virtual ElectionType ElectionType { get; set; }
 
-        public virtual PoliticalParty PoliticalParty { get; set; }
+        public virtual Candidate Candidate { get; set; }
     }
 }

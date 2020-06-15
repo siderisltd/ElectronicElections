@@ -42,7 +42,7 @@ namespace ElectronicElections.Infrastructure.Services
 
             var vote = new Vote
             {
-                PoliticalPartyId = voteModel.PoliticalPartyId,
+                CandidateId = voteModel.CandidateId,
                 VotedFromIp = voteModel.VoterIp,
                 ElectionsType = voteModel.ElectionType,
                 Voter = voter,

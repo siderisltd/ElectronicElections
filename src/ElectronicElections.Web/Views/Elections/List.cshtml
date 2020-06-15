@@ -1,5 +1,5 @@
 ﻿@using ElectronicElections.Infrastructure.Models
-@model IEnumerable<PoliticalPartyModel>
+@model IEnumerable<CandidateModel>
 
 @{ ViewData["Title"] = "Elections"; }
 
@@ -8,17 +8,17 @@
 }
 
 <div class="@cardGroupClass">
-    @foreach (var politicalParty in Model)
+    @foreach (var candidate in Model)
     {
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="@politicalParty.LogoBase64" height="250" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">@politicalParty.Name</h5>
-                <p class="card-text">@politicalParty.Description.Substring(0, politicalParty.Description.Length >= 100 ? 100 : politicalParty.Description.Length) ...</p>
-                <h5>@Html.DisplayNameFor(model => model.FirstOrDefault().WikiLink) <a href="@politicalParty.WikiLink" target="_blank">тук</a>.</h5>
-                @Html.ActionLink("Избери", "Vote", "Voting", new { electionType = ViewData["ElectionsType"], politicalPartyId = politicalParty.Id }, new { @class = "btn btn-primary" })
-            </div>
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="@Url.Content(candidate.ImgLink)" height="250" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">@candidate.Name</h5>
+            <p class="card-text">@candidate.Description.Substring(0, candidate.Description.Length >= 100 ? 100 : candidate.Description.Length) ...</p>
+            <h5>@Html.DisplayNameFor(model => model.FirstOrDefault().WikiLink) <a href="@candidate.WikiLink" target="_blank">тук</a>.</h5>
+            @Html.ActionLink("Избери", "Vote", "Voting", new { electionType = ViewData["ElectionsType"], candidateId = candidate.Id }, new { @class = "btn btn-primary" })
         </div>
+    </div>
     }
 </div>
 

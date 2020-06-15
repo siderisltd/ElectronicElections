@@ -19,6 +19,142 @@ namespace ElectronicElections.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("ElectronicElections.Data.Models.Candidate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CandidateType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("Goals")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("ImgLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("WikiLink")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Candidates");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("df70469c-9d91-4390-8cca-e0e3b5d03e51"),
+                            CandidateType = 1,
+                            Description = "ГЕРБ е дясноцентристка, популистка, консервативна и проевропейска политическа партия в България. Тя е основана на 3 декември 2006 г. по инициатива на кмета на София Бойко Борисов, на основата на създаденото по-рано през същата година гражданско сдружение с име „Граждани за европейско развитие на България“ и абревиатура „ГЕРБ“.[6] Централата на партията се намира в Националния дворец на културата, на площад „България“ №1 в.",
+                            Goals = "Унищожаване на Българската икономика и популация. Собствена изгода",
+                            ImgLink = "https://m.netinfo.bg/media/images/34784/34784806/991-ratio-kotka-kuche.jpg",
+                            Name = "ГЕРБ",
+                            WikiLink = "https://m.netinfo.bg/media/images/34784/34784806/991-ratio-kotka-kuche.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("53b319cb-b0e0-4f22-af56-2fd86384361f"),
+                            CandidateType = 1,
+                            Description = "Движението за права и свободи (ДПС) е центристка политическа партия в България, ползваща се с подкрепата главно на етническите турци и други мюсюлмани в България, определяща се като либерална партия и член на Либералния интернационал. ДПС е определяно като един от основните поддръжници на олигархичния модел на държавно управление.[1]",
+                            Goals = "Голове тест 123",
+                            ImgLink = "https://m5.netinfo.bg/media/images/15946/15946663/896-504-kuche-i-kote.jpg",
+                            Name = "ДПС",
+                            WikiLink = "https://bg.wikipedia.org/wiki/ДПС"
+                        },
+                        new
+                        {
+                            Id = new Guid("24fe9645-55b7-4a09-ac60-ca2548a61899"),
+                            CandidateType = 1,
+                            Description = "„Атака“ е политическа партия в България[2][3], която използва популистки послания, за да спечели симпатии от избирателите.[4] Според някои мнения „Атака“ е крайнодясна партия[1], според други – крайнолява.[5] Заема проруски позиции.[6]",
+                            Goals = "Партията е парламентарно представена, издава партиен вестник („Атака“) и притежава своя телевизия – „ТВ Алфа“.",
+                            ImgLink = "https://m.netinfo.bg/media/images/32905/32905551/991-ratio-kotki-i-kucheta.jpg",
+                            Name = "Атака",
+                            WikiLink = "https://bg.wikipedia.org/wiki/Атака_(партия)"
+                        },
+                        new
+                        {
+                            Id = new Guid("78823942-b5d5-4377-80c6-742d81362625"),
+                            CandidateType = 0,
+                            Description = "Тест инфо",
+                            Goals = "Партията е парламентарно представена, издава партиен вестник („Атака“) и притежава своя телевизия – „ТВ Алфа“.",
+                            ImgLink = "https://static.framar.bg/thumbs/6/lifestyle/usmivka-kuche.png",
+                            Name = "Волен Сидеров",
+                            WikiLink = "https://bg.wikipedia.org/wiki/Волен_Сидеров"
+                        });
+                });
+
+            modelBuilder.Entity("ElectronicElections.Data.Models.CandidateElectionType", b =>
+                {
+                    b.Property<Guid>("CandidateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ElectionTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CandidateId", "ElectionTypeId");
+
+                    b.HasIndex("ElectionTypeId");
+
+                    b.ToTable("CandidateElectionType");
+
+                    b.HasData(
+                        new
+                        {
+                            CandidateId = new Guid("df70469c-9d91-4390-8cca-e0e3b5d03e51"),
+                            ElectionTypeId = 0
+                        },
+                        new
+                        {
+                            CandidateId = new Guid("df70469c-9d91-4390-8cca-e0e3b5d03e51"),
+                            ElectionTypeId = 2
+                        },
+                        new
+                        {
+                            CandidateId = new Guid("df70469c-9d91-4390-8cca-e0e3b5d03e51"),
+                            ElectionTypeId = 1
+                        },
+                        new
+                        {
+                            CandidateId = new Guid("24fe9645-55b7-4a09-ac60-ca2548a61899"),
+                            ElectionTypeId = 0
+                        },
+                        new
+                        {
+                            CandidateId = new Guid("24fe9645-55b7-4a09-ac60-ca2548a61899"),
+                            ElectionTypeId = 2
+                        },
+                        new
+                        {
+                            CandidateId = new Guid("53b319cb-b0e0-4f22-af56-2fd86384361f"),
+                            ElectionTypeId = 0
+                        },
+                        new
+                        {
+                            CandidateId = new Guid("53b319cb-b0e0-4f22-af56-2fd86384361f"),
+                            ElectionTypeId = 2
+                        },
+                        new
+                        {
+                            CandidateId = new Guid("78823942-b5d5-4377-80c6-742d81362625"),
+                            ElectionTypeId = 1
+                        });
+                });
+
             modelBuilder.Entity("ElectronicElections.Data.Models.ElectionType", b =>
                 {
                     b.Property<int>("Id")
@@ -46,230 +182,23 @@ namespace ElectronicElections.Data.Migrations
                         new
                         {
                             Id = 0,
-                            Description = "Some description",
+                            Description = "Избори за народно събрание",
                             Name = "NationalAssembly",
-                            WikiLink = "https://google.com"
+                            WikiLink = "https://bg.wikipedia.org/wiki/Избори_в_България#За_народно_събрание"
                         },
                         new
                         {
                             Id = 1,
-                            Description = "Some description",
+                            Description = "Президентски избори",
                             Name = "PresidentalElections",
-                            WikiLink = "https://google.com"
+                            WikiLink = "https://bg.wikipedia.org/wiki/Избори_в_България#За_президент"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Some description",
+                            Description = "Избори за европейски парламент",
                             Name = "EuropeanParliament",
-                            WikiLink = "https://google.com"
-                        });
-                });
-
-            modelBuilder.Entity("ElectronicElections.Data.Models.PoliticalParty", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<string>("Goals")
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
-
-                    b.Property<string>("LogoLink")
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("WikiLink")
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PoliticalParties");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("b42d93ab-c675-4809-855f-c903d0c02112"),
-                            Description = "ГЕРБ е дясноцентристка, популистка, консервативна и проевропейска политическа партия в България. Тя е основана на 3 декември 2006 г. по инициатива на кмета на София Бойко Борисов, на основата на създаденото по-рано през същата година гражданско сдружение с име „Граждани за европейско развитие на България“ и абревиатура „ГЕРБ“.[6] Централата на партията се намира в Националния дворец на културата, на площад „България“ №1 в.",
-                            Goals = "Унищожаване на Българската икономика и популация. Собствена изгода",
-                            LogoLink = "https://lh3.googleusercontent.com/proxy/4zqzPSm22DJIQ7pdaLVRjJXVfqVXFhx8kaIft_KMNK6S-dVFY7tA0Y4fTUBEvPVMxesXAWYe5P_gID2ANJ8Jb_LwtguNavWm",
-                            Name = "ГЕРБ",
-                            WikiLink = "https://bg.wikipedia.org/wiki/ГЕРБ"
-                        },
-                        new
-                        {
-                            Id = new Guid("55755f3e-e9fa-4f01-8882-e09c27042665"),
-                            Description = "Движението за права и свободи (ДПС) е центристка политическа партия в България, ползваща се с подкрепата главно на етническите турци и други мюсюлмани в България, определяща се като либерална партия и член на Либералния интернационал. ДПС е определяно като един от основните поддръжници на олигархичния модел на държавно управление.[1]",
-                            Goals = "Голове тест 123",
-                            LogoLink = "https://lh3.googleusercontent.com/proxy/XUQdtdclVg27SSLJxbP1-6An0aSnvFFmwWqZLbf5RhVY-mcxtPrTHYuQmiJu5_jqVPTutOr1OfaR6hZMk9vb2AYe09aqfDRqtkV3Tx3gP72wQHU",
-                            Name = "ДПС",
-                            WikiLink = "https://bg.wikipedia.org/wiki/ДПС"
-                        },
-                        new
-                        {
-                            Id = new Guid("197c6090-9ba1-4478-849f-24db488a1e4d"),
-                            Description = "„Атака“ е политическа партия в България[2][3], която използва популистки послания, за да спечели симпатии от избирателите.[4] Според някои мнения „Атака“ е крайнодясна партия[1], според други – крайнолява.[5] Заема проруски позиции.[6]",
-                            Goals = "Партията е парламентарно представена, издава партиен вестник („Атака“) и притежава своя телевизия – „ТВ Алфа“.",
-                            LogoLink = "https://pia-news.com/wp-content/uploads/2015/09/ataka_logo.gif",
-                            Name = "Атака",
-                            WikiLink = "https://bg.wikipedia.org/wiki/Атака_(партия)"
-                        });
-                });
-
-            modelBuilder.Entity("ElectronicElections.Data.Models.PoliticalPartyElectionType", b =>
-                {
-                    b.Property<Guid>("PoliticalPartyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ElectionTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PoliticalPartyId", "ElectionTypeId");
-
-                    b.HasIndex("ElectionTypeId");
-
-                    b.ToTable("PoliticalPartyElectionType");
-
-                    b.HasData(
-                        new
-                        {
-                            PoliticalPartyId = new Guid("b42d93ab-c675-4809-855f-c903d0c02112"),
-                            ElectionTypeId = 0
-                        },
-                        new
-                        {
-                            PoliticalPartyId = new Guid("b42d93ab-c675-4809-855f-c903d0c02112"),
-                            ElectionTypeId = 2
-                        },
-                        new
-                        {
-                            PoliticalPartyId = new Guid("b42d93ab-c675-4809-855f-c903d0c02112"),
-                            ElectionTypeId = 1
-                        },
-                        new
-                        {
-                            PoliticalPartyId = new Guid("197c6090-9ba1-4478-849f-24db488a1e4d"),
-                            ElectionTypeId = 0
-                        },
-                        new
-                        {
-                            PoliticalPartyId = new Guid("197c6090-9ba1-4478-849f-24db488a1e4d"),
-                            ElectionTypeId = 2
-                        },
-                        new
-                        {
-                            PoliticalPartyId = new Guid("55755f3e-e9fa-4f01-8882-e09c27042665"),
-                            ElectionTypeId = 0
-                        },
-                        new
-                        {
-                            PoliticalPartyId = new Guid("55755f3e-e9fa-4f01-8882-e09c27042665"),
-                            ElectionTypeId = 2
-                        });
-                });
-
-            modelBuilder.Entity("ElectronicElections.Data.Models.Politician", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte>("Age")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<string>("PhotoLink")
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<Guid>("PoliticalPartyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("WikiLink")
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PoliticalPartyId");
-
-                    b.ToTable("Politicians");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("c99a57e8-e41b-41d9-b41b-7959a98daee7"),
-                            Age = (byte)50,
-                            Description = "Хомосексуалист, който ограбва държавата. Мафиот",
-                            FirstName = "Бойко",
-                            LastName = "Борисов",
-                            PoliticalPartyId = new Guid("b42d93ab-c675-4809-855f-c903d0c02112"),
-                            WikiLink = "https://google.com"
-                        },
-                        new
-                        {
-                            Id = new Guid("b4b9c11c-a08b-4c0e-81d7-61dff06690a1"),
-                            Age = (byte)40,
-                            Description = "Тест. Мафиот 2",
-                            FirstName = "Тест",
-                            LastName = "Тест 2",
-                            PoliticalPartyId = new Guid("b42d93ab-c675-4809-855f-c903d0c02112"),
-                            WikiLink = "https://google.com"
-                        },
-                        new
-                        {
-                            Id = new Guid("a6e36a45-7f1d-46a8-b003-37f616350ef6"),
-                            Age = (byte)20,
-                            Description = "Описание дпс",
-                            FirstName = "Тест дпс фн",
-                            LastName = "Тест дпс лн",
-                            PoliticalPartyId = new Guid("55755f3e-e9fa-4f01-8882-e09c27042665"),
-                            WikiLink = "https://google.com"
-                        },
-                        new
-                        {
-                            Id = new Guid("6d93ab01-b55c-4d14-a571-1c254e32b32e"),
-                            Age = (byte)30,
-                            Description = "Тест. Описание 2",
-                            FirstName = "Тест дпс 2 фн",
-                            LastName = "Тест дпс 2 лн",
-                            PoliticalPartyId = new Guid("55755f3e-e9fa-4f01-8882-e09c27042665"),
-                            WikiLink = "https://google.com"
-                        },
-                        new
-                        {
-                            Id = new Guid("04f446de-3a3f-4d01-ae3e-2074a29d847e"),
-                            Age = (byte)60,
-                            Description = "Активист",
-                            FirstName = "Волен",
-                            LastName = "Сидеров",
-                            PoliticalPartyId = new Guid("197c6090-9ba1-4478-849f-24db488a1e4d"),
-                            WikiLink = "https://google.com"
+                            WikiLink = "https://bg.wikipedia.org/wiki/Избори_в_България#За_европейски_парламент"
                         });
                 });
 
@@ -277,6 +206,9 @@ namespace ElectronicElections.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CandidateId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
@@ -287,9 +219,6 @@ namespace ElectronicElections.Data.Migrations
 
                     b.Property<bool>("IsVerified")
                         .HasColumnType("bit");
-
-                    b.Property<Guid>("PoliticalPartyId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("VerificationCode")
                         .HasColumnType("uniqueidentifier");
@@ -306,7 +235,7 @@ namespace ElectronicElections.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PoliticalPartyId");
+                    b.HasIndex("CandidateId");
 
                     b.HasIndex("VoterId");
 
@@ -328,48 +257,44 @@ namespace ElectronicElections.Data.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("IpInfo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
                     b.ToTable("Voters");
                 });
 
-            modelBuilder.Entity("ElectronicElections.Data.Models.PoliticalPartyElectionType", b =>
+            modelBuilder.Entity("ElectronicElections.Data.Models.CandidateElectionType", b =>
                 {
-                    b.HasOne("ElectronicElections.Data.Models.ElectionType", "ElectionType")
-                        .WithMany("PoliticalParties")
-                        .HasForeignKey("ElectionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ElectronicElections.Data.Models.PoliticalParty", "PoliticalParty")
+                    b.HasOne("ElectronicElections.Data.Models.Candidate", "Candidate")
                         .WithMany("ParticipantInElections")
-                        .HasForeignKey("PoliticalPartyId")
+                        .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("ElectronicElections.Data.Models.Politician", b =>
-                {
-                    b.HasOne("ElectronicElections.Data.Models.PoliticalParty", "PoliticalParty")
-                        .WithMany("Politicians")
-                        .HasForeignKey("PoliticalPartyId")
+                    b.HasOne("ElectronicElections.Data.Models.ElectionType", "ElectionType")
+                        .WithMany("Candidates")
+                        .HasForeignKey("ElectionTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("ElectronicElections.Data.Models.Vote", b =>
                 {
-                    b.HasOne("ElectronicElections.Data.Models.PoliticalParty", "PoliticalParty")
+                    b.HasOne("ElectronicElections.Data.Models.Candidate", "Candidate")
                         .WithMany()
-                        .HasForeignKey("PoliticalPartyId")
+                        .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
