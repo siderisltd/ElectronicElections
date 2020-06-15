@@ -7,6 +7,13 @@ namespace ElectronicElections.Infrastructure.Models
 {
     public class VerifyVoteModel : IValidatableObject
     {
+        public VerifyVoteModel(string nonce)
+        {
+            this.Nonce = nonce;
+        }
+
+        public string Nonce { get; set; }
+
         [DisplayName("Код за потвърждаване")]
         public string Code { get; set; }
 

@@ -25,5 +25,9 @@ namespace ElectronicElections.Data.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(200)]
+        public string IpInfo { get; set; }
     }
 }

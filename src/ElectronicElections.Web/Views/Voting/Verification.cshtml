@@ -15,6 +15,7 @@ else
     @using (Html.BeginForm("Verify", "Voting", FormMethod.Post, new { id = "verify-vote-form" }))
     {
         @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.Nonce)
 
         <div class="form-group">
             @Html.LabelFor(x => x.Code, new { @class = "col-lg-4 control-label" })

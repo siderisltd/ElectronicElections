@@ -67,12 +67,12 @@ namespace ElectronicElections.Web.Controllers
             }
 
             model.VerificationCode = Guid.NewGuid();
-            var isSuccess = this.voteService.Vote(model);
+            var nonce = this.voteService.Vote(model);
 
-            if (isSuccess)
+            if (!string.IsNullOrEmpty(nonce))
             {
                 this.voteService.SendVerificationCode(model.VoterEmail, model.VerificationCode);
-                return RedirectToAction(nameof(this.Verification));
+                return RedirectToAction(nameof(this.Verification), new { nonce });
             }
             else
             {
@@ -80,9 +80,11 @@ namespace ElectronicElections.Web.Controllers
             }
         }
 
-        public ActionResult Verification()
+        public ActionResult Verification(string nonce)
         {
-            return this.View(new VerifyVoteModel());
+            var model = new VerifyVoteModel(nonce);
+
+            return this.View(model);
         }
 
         [HttpPost]
@@ -96,7 +98,7 @@ namespace ElectronicElections.Web.Controllers
                     return this.View(nameof(this.Verification), model);
                 }
 
-                var isVerified = this.voteService.Verify(Guid.Parse(model.Code));
+                var isVerified = this.voteService.Verify(Guid.Parse(model.Code), model.Nonce);
 
                 if (isVerified)
                 {

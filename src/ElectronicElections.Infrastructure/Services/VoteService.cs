@@ -2,6 +2,7 @@
 using ElectronicElections.Data.Models;
 using ElectronicElections.Infrastructure.Models;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Net.Mail;
@@ -21,16 +22,22 @@ namespace ElectronicElections.Infrastructure.Services
             this.logger = logger;
         }
 
-        public bool Vote(VoteModel voteModel)
+        public string Vote(VoteModel voteModel)
         {
             //TODO: Encrypt data
+
+            var testip = "149.62.204.115";
+            //var testip = "130.185.224.90";
+            //var ipInfo = this.GetIpInfo(voteModel.VoterIp);
+            var ipInfo = this.GetIpInfo(testip);
 
             var voter = new Voter
             {
                 FirstName = voteModel.VoterFirstName,
                 LastName = voteModel.VoterLastName,
                 Age = voteModel.VoterAge,
-                Email = voteModel.VoterEmail
+                Email = voteModel.VoterEmail,
+                IpInfo = JsonConvert.SerializeObject(ipInfo)
             };
 
             var vote = new Vote
@@ -44,20 +51,18 @@ namespace ElectronicElections.Infrastructure.Services
 
             try
             {
-                this.electionsManager.PostVote(vote);
-
-                return true;
+                return this.electionsManager.PostVote(vote);
             }
             catch (Exception ex)
             {
                 this.logger.LogError(ex, ex.Message);
-                return false;
+                return null;
             }
         }
 
-        public bool Verify(Guid verificationCode)
+        public bool Verify(Guid verificationCode, string nonce)
         {
-            return this.electionsManager.Verify(verificationCode);
+            return this.electionsManager.Verify(verificationCode, nonce);
         }
 
         public void SendVerificationCode(string to, Guid verificationCode)
@@ -106,6 +111,22 @@ namespace ElectronicElections.Infrastructure.Services
                     this.logger.LogError("Sendin mail retried a few times without success");
                 }
             }
+        }
+
+        private IpInfo GetIpInfo(string ip)
+        {
+            var ipInfo = new IpInfo();
+            try
+            {
+                string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
+                ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogWarning($"Cannot locate country of IP {ip}. Leaving default. Exception message: {ex.Message}");
+            }
+
+            return ipInfo;
         }
     }
 }
