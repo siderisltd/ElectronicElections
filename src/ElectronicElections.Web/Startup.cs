@@ -32,6 +32,7 @@ namespace ElectronicElections.Web
                 opts.UseLazyLoadingProxies();
             });
 
+            services.AddScoped<EncryptionManagerConfiguration>();
             services.AddScoped<EncryptionManager>();
             services.AddScoped<ElectionsManager>();
 
