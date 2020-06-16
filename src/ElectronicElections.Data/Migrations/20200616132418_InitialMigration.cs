@@ -109,42 +109,6 @@ namespace ElectronicElections.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Candidates",
-                columns: new[] { "Id", "CandidateType", "Description", "Goals", "ImgLink", "Name", "WikiLink" },
-                values: new object[,]
-                {
-                    { new Guid("df70469c-9d91-4390-8cca-e0e3b5d03e51"), 1, "ГЕРБ е дясноцентристка, популистка, консервативна и проевропейска политическа партия в България. Тя е основана на 3 декември 2006 г. по инициатива на кмета на София Бойко Борисов, на основата на създаденото по-рано през същата година гражданско сдружение с име „Граждани за европейско развитие на България“ и абревиатура „ГЕРБ“.[6] Централата на партията се намира в Националния дворец на културата, на площад „България“ №1 в.", "Унищожаване на Българската икономика и популация. Собствена изгода", "https://m.netinfo.bg/media/images/34784/34784806/991-ratio-kotka-kuche.jpg", "ГЕРБ", "https://m.netinfo.bg/media/images/34784/34784806/991-ratio-kotka-kuche.jpg" },
-                    { new Guid("53b319cb-b0e0-4f22-af56-2fd86384361f"), 1, "Движението за права и свободи (ДПС) е центристка политическа партия в България, ползваща се с подкрепата главно на етническите турци и други мюсюлмани в България, определяща се като либерална партия и член на Либералния интернационал. ДПС е определяно като един от основните поддръжници на олигархичния модел на държавно управление.[1]", "Голове тест 123", "https://m5.netinfo.bg/media/images/15946/15946663/896-504-kuche-i-kote.jpg", "ДПС", "https://bg.wikipedia.org/wiki/ДПС" },
-                    { new Guid("24fe9645-55b7-4a09-ac60-ca2548a61899"), 1, "„Атака“ е политическа партия в България[2][3], която използва популистки послания, за да спечели симпатии от избирателите.[4] Според някои мнения „Атака“ е крайнодясна партия[1], според други – крайнолява.[5] Заема проруски позиции.[6]", "Партията е парламентарно представена, издава партиен вестник („Атака“) и притежава своя телевизия – „ТВ Алфа“.", "https://m.netinfo.bg/media/images/32905/32905551/991-ratio-kotki-i-kucheta.jpg", "Атака", "https://bg.wikipedia.org/wiki/Атака_(партия)" },
-                    { new Guid("78823942-b5d5-4377-80c6-742d81362625"), 0, "Тест инфо", "Партията е парламентарно представена, издава партиен вестник („Атака“) и притежава своя телевизия – „ТВ Алфа“.", "https://static.framar.bg/thumbs/6/lifestyle/usmivka-kuche.png", "Волен Сидеров", "https://bg.wikipedia.org/wiki/Волен_Сидеров" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ElectionTypes",
-                columns: new[] { "Id", "Description", "Name", "WikiLink" },
-                values: new object[,]
-                {
-                    { 0, "Избори за народно събрание", "NationalAssembly", "https://bg.wikipedia.org/wiki/Избори_в_България#За_народно_събрание" },
-                    { 1, "Президентски избори", "PresidentalElections", "https://bg.wikipedia.org/wiki/Избори_в_България#За_президент" },
-                    { 2, "Избори за европейски парламент", "EuropeanParliament", "https://bg.wikipedia.org/wiki/Избори_в_България#За_европейски_парламент" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "CandidateElectionType",
-                columns: new[] { "CandidateId", "ElectionTypeId" },
-                values: new object[,]
-                {
-                    { new Guid("df70469c-9d91-4390-8cca-e0e3b5d03e51"), 0 },
-                    { new Guid("24fe9645-55b7-4a09-ac60-ca2548a61899"), 0 },
-                    { new Guid("53b319cb-b0e0-4f22-af56-2fd86384361f"), 0 },
-                    { new Guid("df70469c-9d91-4390-8cca-e0e3b5d03e51"), 1 },
-                    { new Guid("78823942-b5d5-4377-80c6-742d81362625"), 1 },
-                    { new Guid("df70469c-9d91-4390-8cca-e0e3b5d03e51"), 2 },
-                    { new Guid("24fe9645-55b7-4a09-ac60-ca2548a61899"), 2 },
-                    { new Guid("53b319cb-b0e0-4f22-af56-2fd86384361f"), 2 }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_CandidateElectionType_ElectionTypeId",
                 table: "CandidateElectionType",

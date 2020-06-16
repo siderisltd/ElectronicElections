@@ -1,41 +1,89 @@
 ﻿using ElectronicElections.Data.Models;
-using Microsoft.EntityFrameworkCore;
+using ExcelDataReader;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace ElectronicElections.Data.Managers
 {
-    internal class DataSeedManager
+    public static class DataSeedManager
     {
-        private readonly Guid gerbId;
-        private readonly Guid dpsId;
-        private readonly Guid atakaId;
-        private readonly Guid volenId;
-
-        public DataSeedManager()
+        public static void Seed(ElectronicElectionsDbContext ctx)
         {
-            this.gerbId = Guid.NewGuid();
-            this.dpsId = Guid.NewGuid();
-            this.atakaId = Guid.NewGuid();
-            this.volenId = Guid.NewGuid();
+            if (!ctx.ElectionTypes.Any())
+            {
+                var electionTypes = GetAllElectionTypes();
+                ctx.ElectionTypes.AddRange(electionTypes);
+                ctx.SaveChanges();
+            }
+
+            if (!ctx.Candidates.Any())
+            {
+                //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                DataTable table;
+                using (var stream = File.Open("../ElectronicElections.Data/TestData/Candidates.xlsx", FileMode.Open, FileAccess.Read))
+                {
+                    using var reader = ExcelReaderFactory.CreateReader(stream);
+                    var spreadSheet = reader.AsDataSet(new ExcelDataSetConfiguration
+                    {
+                        ConfigureDataTable = _ => new ExcelDataTableConfiguration
+                        {
+                            UseHeaderRow = true
+                        }
+                    });
+
+                    table = spreadSheet.Tables[0];
+                }
+
+                var candidates = ExtractCandidates(table);
+
+                ctx.Candidates.AddRange(candidates);
+                ctx.SaveChanges();
+            }
+
         }
 
-        internal void SeedElectionTypes(ModelBuilder modelBuilder)
+        private static List<Candidate> ExtractCandidates(DataTable table)
         {
-            modelBuilder.Entity<ElectionType>().HasData(this.GetAllElectionTypes());
+            var candidates = new List<Candidate>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                var candidateType = (CandidateTypeId)Enum.Parse(typeof(CandidateTypeId), row[5].ToString());
+
+                var currentCandidate = new Candidate
+                {
+                    Name = row[0].ToString(),
+                    Description = row[1].ToString(),
+                    WikiLink = row[2].ToString(),
+                    Goals = row[3].ToString(),
+                    ImgLink = row[4].ToString(),
+                    CandidateType = candidateType
+                };
+
+
+                var electionTypes = row[6].ToString()
+                    .Split(new char[] { ',' })
+                    .Select(x =>
+                    {
+                        var res = new CandidateElectionType();
+                        res.ElectionTypeId = (ElectionTypeId)Enum.Parse(typeof(ElectionTypeId), x);
+
+                        return res;
+                    }).ToList();
+
+                currentCandidate.ParticipantInElections = electionTypes;
+
+                candidates.Add(currentCandidate);
+            }
+
+            return candidates;
         }
 
-        internal void SeedCandidates(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Candidate>().HasData(this.GetAllCandidates());
-        }
-
-        internal void SeedCandidateElectionTypeRelations(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<CandidateElectionType>().HasData(this.GetAllCandidateElectionTypes());
-        }
-
-        private IEnumerable<ElectionType> GetAllElectionTypes()
+        private static IEnumerable<ElectionType> GetAllElectionTypes()
         {
             var electionTypes = new List<ElectionType>
             {
@@ -63,104 +111,6 @@ namespace ElectronicElections.Data.Managers
             };
 
             return electionTypes;
-        }
-
-        private IEnumerable<Candidate> GetAllCandidates()
-        {
-            var candidates = new List<Candidate>
-            {
-                new Candidate()
-                {
-                    Id = this.gerbId,
-                    Name = "ГЕРБ",
-                    Description = "ГЕРБ е дясноцентристка, популистка, консервативна и проевропейска политическа партия в България. Тя е основана на 3 декември 2006 г. по инициатива на кмета на София Бойко Борисов, на основата на създаденото по-рано през същата година гражданско сдружение с име „Граждани за европейско развитие на България“ и абревиатура „ГЕРБ“.[6] Централата на партията се намира в Националния дворец на културата, на площад „България“ №1 в.",
-                    WikiLink = "https://m.netinfo.bg/media/images/34784/34784806/991-ratio-kotka-kuche.jpg",
-                    Goals = "Унищожаване на Българската икономика и популация. Собствена изгода",
-                    ImgLink = "https://m.netinfo.bg/media/images/34784/34784806/991-ratio-kotka-kuche.jpg",
-                    CandidateType = CandidateTypeId.PoliticalParty
-                },
-                new Candidate()
-                {
-                    Id = this.dpsId,
-                    Name = "ДПС",
-                    Description = "Движението за права и свободи (ДПС) е центристка политическа партия в България, ползваща се с подкрепата главно на етническите турци и други мюсюлмани в България, определяща се като либерална партия и член на Либералния интернационал. ДПС е определяно като един от основните поддръжници на олигархичния модел на държавно управление.[1]",
-                    WikiLink = "https://bg.wikipedia.org/wiki/ДПС",
-                    Goals = "Голове тест 123",
-                    ImgLink = "https://m5.netinfo.bg/media/images/15946/15946663/896-504-kuche-i-kote.jpg",
-                    CandidateType = CandidateTypeId.PoliticalParty
-                },
-                new Candidate()
-                {
-                    Id = this.atakaId,
-                    Name = "Атака",
-                    Description = "„Атака“ е политическа партия в България[2][3], която използва популистки послания, за да спечели симпатии от избирателите.[4] Според някои мнения „Атака“ е крайнодясна партия[1], според други – крайнолява.[5] Заема проруски позиции.[6]",
-                    WikiLink = "https://bg.wikipedia.org/wiki/Атака_(партия)",
-                    Goals = "Партията е парламентарно представена, издава партиен вестник („Атака“) и притежава своя телевизия – „ТВ Алфа“.",
-                    ImgLink = "https://m.netinfo.bg/media/images/32905/32905551/991-ratio-kotki-i-kucheta.jpg",
-                    CandidateType = CandidateTypeId.PoliticalParty
-                },
-                new Candidate()
-                {
-                    Id = this.volenId,
-                    Name = "Волен Сидеров",
-                    Description = "Тест инфо",
-                    WikiLink = "https://bg.wikipedia.org/wiki/Волен_Сидеров",
-                    Goals = "Партията е парламентарно представена, издава партиен вестник („Атака“) и притежава своя телевизия – „ТВ Алфа“.",
-                    ImgLink = "https://static.framar.bg/thumbs/6/lifestyle/usmivka-kuche.png",
-                    CandidateType = CandidateTypeId.IndependentPolitician
-                }
-            };
-
-            return candidates;
-        }
-
-        private IEnumerable<CandidateElectionType> GetAllCandidateElectionTypes()
-        {
-            var candidateElectionType = new List<CandidateElectionType>
-            {
-                new CandidateElectionType
-                {
-                    ElectionTypeId = ElectionTypeId.NationalAssembly,
-                    CandidateId = this.gerbId
-                },
-                new CandidateElectionType
-                {
-                    ElectionTypeId = ElectionTypeId.EuropeanParliament,
-                    CandidateId = this.gerbId
-                },
-                new CandidateElectionType
-                {
-                    ElectionTypeId = ElectionTypeId.PresidentalElections,
-                    CandidateId = this.gerbId
-                },
-                new CandidateElectionType
-                {
-                    ElectionTypeId = ElectionTypeId.NationalAssembly,
-                    CandidateId = this.atakaId
-                },
-                new CandidateElectionType
-                {
-                    ElectionTypeId = ElectionTypeId.EuropeanParliament,
-                    CandidateId = this.atakaId
-                },
-                new CandidateElectionType
-                {
-                    ElectionTypeId = ElectionTypeId.NationalAssembly,
-                    CandidateId = this.dpsId
-                },
-                new CandidateElectionType
-                {
-                    ElectionTypeId = ElectionTypeId.EuropeanParliament,
-                    CandidateId = this.dpsId
-                },
-                new CandidateElectionType
-                {
-                    ElectionTypeId = ElectionTypeId.PresidentalElections,
-                    CandidateId = this.volenId
-                }
-            };
-
-            return candidateElectionType;
         }
     }
 }

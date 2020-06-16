@@ -1,5 +1,4 @@
-﻿using ElectronicElections.Data.Managers;
-using ElectronicElections.Data.Models;
+﻿using ElectronicElections.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ElectronicElections.Data
@@ -22,16 +21,6 @@ namespace ElectronicElections.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ConfigureRelationships(modelBuilder);
-            SeedData(modelBuilder);
-        }
-
-        private static void SeedData(ModelBuilder modelBuilder)
-        {
-            var dataSeedManager = new DataSeedManager();
-
-            dataSeedManager.SeedElectionTypes(modelBuilder);
-            dataSeedManager.SeedCandidates(modelBuilder);
-            dataSeedManager.SeedCandidateElectionTypeRelations(modelBuilder);
         }
 
         private static void ConfigureRelationships(ModelBuilder modelBuilder)
